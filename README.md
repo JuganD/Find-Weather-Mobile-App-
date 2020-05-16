@@ -42,4 +42,4 @@ It creates folder FindWeather_Build, copies all the files from FindWeather, runs
 
 ## Others
 Great app design thanks to  
-* [responsive-web-weather-app] (https://github.com/JonUK/responsive-web-weather-app)
+* [responsive-web-weather-app](https://github.com/JonUK/responsive-web-weather-app)
