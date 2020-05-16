@@ -17,7 +17,7 @@ You can start it in Visual Studio - either use Google emulator or browser simula
 ### Insert your OpenWeatherMap.org API key
 Insert your OpenWeatherMap.org API key in www/scripts/weather.js (first line) and in Merges/iOS/scripts/weather.js (first line), if you'd like to compile it for iOS.
 
-### Compile for Android or iOS
+### Compile for Android (or iOS with its command counterparts)
 To compile the app you need to have Android SDK (I'm using SDK for Android 8), JDK 8 (my version is Java SE Development Kit 8 Update 251), Gradle (I recommend version 4.4.1 or newer) and Cordova Command-line Interface (npm install -g cordova)
 To build Android APK:
 First enter folder FindWeather (where you can find www)
