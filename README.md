@@ -41,4 +41,5 @@ It creates folder FindWeather_Build, copies all the files from FindWeather, runs
 * ... and other plugins inside Cordova's default library!
 
 ## Others
-Great app design thanks to * [responsive-web-weather-app] (https://github.com/JonUK/responsive-web-weather-app)
+Great app design thanks to  
+* [responsive-web-weather-app] (https://github.com/JonUK/responsive-web-weather-app)
