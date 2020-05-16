@@ -3,7 +3,7 @@ Find Weather is a mobile application made on Apache Cordova with Javascript to c
 It is using the openweathermap's API (https://openweathermap.org/)  
 **THE ENTIRE APP IS IN BULGARIAN** - read Info if you wonder why.  
 
-<img src="./app-screenshot.jpg" width="413" height="862">
+<img src="./app-screenshot.jpg" align="left" width="413" height="862">
 
 ## Info
 The purpose of this app creation is term paper for my University in Bulgaria.  
