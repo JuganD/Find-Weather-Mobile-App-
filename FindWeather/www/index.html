@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/customEffects.css" />
+    <link rel="icon" href="res/icons/android/icon-36-ldpi.png" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+    <title>Find Weather</title>
+</head>
+<body class="text-white">
+    <div id="circularLoader" class="lds-dual-ring absolute-center d-none"></div>
+    <div id="weather-page" class="background-main" data-role="page" >
+        <div id="geolocButton" class="mr-3 mb-3" style="position: fixed; bottom: 0; right:0">
+            <img src="images/geoloc.png" class="geoloc-image" style="height: 60px; width: 60px;" />
+        </div>
+        <div data-role="header" class="header">
+            <h1 class="text-center mt-2" id="app-title">Прогноза за времето</h1>
+            <!-- <a href="/" class="ui-btn ui-btn-left ui-btn-corner-all uiicon-home ui-btn-icon-notext" rel="external">Home</a>-->
+        </div>
+        <main role="main" class="main-container ui-content">
+            <form class="form" style="width:100%">
+                <div class="form-group">
+                    <label for="city-name">Въведете име на град:</label>
+                    <input id="city-name-input" class="form-control" type="text" style="width:100%" name="city-code" placeholder="например. Sofia" required />
+                    <button id="get-weather-btn" class="btn btn-primary btn-lg btn-block active mt-2" style="width:100%" data-role="button" data-icon="search">
+                        Покажи времето
+                    </button>
+                </div>
+            </form>
+
+            <div class="location-and-date" style="display:none">
+                <div style="display:inline-block;margin-left: 10px;">
+                    <h1 class="location-and-date__location text-white" id="title"></h1>
+                    <div id="date-today"></div>
+                </div>
+                <div style="display:inline-block;float:right; margin-bottom:0">
+                    <input type="checkbox" id="checkbox" />
+                    <label for="checkbox">
+                        <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2" />
+                                <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+
+                                <g id="grp7" opacity="0" transform="translate(7 6)">
+                                    <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2" />
+                                    <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp6" opacity="0" transform="translate(0 28)">
+                                    <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
+                                    <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp3" opacity="0" transform="translate(52 28)">
+                                    <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
+                                    <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp2" opacity="0" transform="translate(44 6)">
+                                    <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2" />
+                                    <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp5" opacity="0" transform="translate(14 50)">
+                                    <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2" />
+                                    <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp4" opacity="0" transform="translate(35 50)">
+                                    <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2" />
+                                    <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2" />
+                                </g>
+
+                                <g id="grp1" opacity="0" transform="translate(24)">
+                                    <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2" />
+                                    <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2" />
+                                </g>
+                            </g>
+                        </svg>
+                    </label>
+                    <span id="favouriteText" onclick="document.getElementById('checkbox').click()" style="margin-left: -10px;cursor:pointer;">Запомни</span>
+                </div>
+            </div>
+
+
+            <div class="current-temperature" style="display:none">
+                <div class="current-temperature__icon-container">
+                    <img id="visibilityIcon" src="images/default-temp.png" class="current-temperature__icon" alt="">
+                </div>
+                <div class="current-temperature__content-container">
+                    <div class="current-temperature__value" id="temperature"></div>
+                    <div class="current-temperature__feelsLike" id="feelsLike"></div>
+                    <div class="current-temperature__summary" id="visibility"></div>
+                </div>
+            </div>
+
+            <div class="current-stats" style="display:none">
+                <div>
+                    <div class="current-stats__value" id="tempMax"></div>
+                    <div class="current-stats__label">Макс.</div>
+                    <div class="current-stats__value" id="tempMin"></div>
+                    <div class="current-stats__label">Мин.</div>
+                </div>
+                <div>
+                    <div class="current-stats__value" id="wind"></div>
+                    <div class="current-stats__label">Вятър</div>
+                    <div class="current-stats__value" id="humidity"></div>
+                    <div class="current-stats__label">Влажност</div>
+                </div>
+                <div>
+                    <div class="current-stats__value" id="sunrise"></div>
+                    <div class="current-stats__label">Изгрев</div>
+                    <div class="current-stats__value" id="sunset"></div>
+                    <div class="current-stats__label">Залез</div>
+                </div>
+            </div>
+
+            <div class="next-5-days" style="display:none">
+                <h2 class="next-5-days__heading">Следващите 5 дни</h2>
+
+            </div>
+
+            <div id="error-msg" class="not-displayed text-center text-danger bg-white rounded p-2">
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/jquery-3.5.0.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/pullToRefresh.min.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/weather.js"></script>
+</body>
+</html>
