@@ -3,6 +3,8 @@ Find Weather is a mobile application made on Apache Cordova with Javascript to c
 It is using the openweathermap's API (https://openweathermap.org/)  
 **THE ENTIRE APP IS IN BULGARIAN** - read Info if you wonder why.  
 
+![Screenshot](app-screenshot.png)
+
 ## Info
 The purpose of this app creation is term paper for my University in Bulgaria.  
 Most of the code is located in file named "weather.js" as the project is small, its development very fast paced and doesn't really have much functions to begin with.  
@@ -37,3 +39,6 @@ It creates folder FindWeather_Build, copies all the files from FindWeather, runs
 * [cordova-plugin-request-location-accuracy](https://github.com/dpa99c/cordova-plugin-request-location-accuracy)
 
 * ... and other plugins inside Cordova's default library!
+
+## Others
+Great app design thanks to * [responsive-web-weather-app] (https://github.com/JonUK/responsive-web-weather-app)
