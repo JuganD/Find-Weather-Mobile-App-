@@ -32,6 +32,16 @@ You can also use the Batchfile I provided in the repo - BUILD.bat.
 You need to run it in the same directory as the .sln file (the current directory)!
 It creates folder FindWeather_Build, copies all the files from FindWeather, runs the 3 commands above and copies the resulting .apk file in the same directory.
 
+Update 15.10.2020 - Uh, so I had to work with cordova project again and this time around I had no access to already configured Android SDK by Android Studio, so I had to manually do it myself. Few pointers for future configurations:
+1. Download Android SDK Command Line tools (in this case commandlinetools-win-6609375_latest.zip) and unarchive it in any directory (like C:\Android\android-sdk, the hierarchy should end up like this - C:\Android\android-sdk\tools\bin\sdkmanager.bat)
+2. Add ANDROID_HOME and ANDROID_SDK_ROOT environmental variables that point to android-sdk directory and also add the tools/bin directory to PATH so you can use sdkmanager from any CMD
+3. Execute sdkmanager "platform-tools" "platforms;android-27" "build-tools;29.0.2" --sdk_root="C:\Android\android-sdk"
+Where - versions may vary (android-27 is for the current target version of the project, which you can find out by trying to build it, says something like: Cordova Android @8.1.0. Turns out it kinda decides for itself, depending on the configuration that you give it. In my case I was targeting much earlier android version, but Cordova seems to not want to use android-25 anymore..?), build-tools version should mostly be irrelevant as long as Cordova finds it (and not give the following error: No build-tools found, install android build tools minimum 1.19, or something like that), sdk-root is the ANDROID_HOME
+4. Execute sdkmanager --update --sdk_root="C:\Android\android-sdk"
+just in case
+5. Now "cordova build android" should download gradle if it cannot find it already and find build-tools directory in the SDK folder to be able to build the APK. If you get the "build-tools not found" error, try tinkering the versions, make sure you are installing android sdk for the appropriate version that "cordova platform add android" and "cordova build android" say in the console.
+Sometimes it really is hard to make it work correctly without already configured Android Studio. Tinkering sdkmanager configuration solved all my problems in this case, but you might also need to tinker the project target versions if they are too outdated.
+
 ## Plugins Used
 
 * [pulltorefresh](https://github.com/BoxFactura/pulltorefresh.js)
